@@ -33,8 +33,8 @@ const login = async (req, res) => {
   const addBooks=async(req,res)=>{
     try {
       const data = req.body;
-      console.log(data)
-      const response=await adminRepositary.addBooks(data)
+      const adminId = req.admin.adminId; 
+      const response=await adminRepositary.addBooks(data,adminId)
       res.status(201).json(response);
     } catch (error) {
       console.error('Error adding book:', error);
@@ -77,6 +77,15 @@ const login = async (req, res) => {
     }
   }
 
+  const getTransaction=async(req,res)=>{
+    try {
+      const adminId = req.admin.adminId; 
+      const transactions=await repositary.getTransaction(adminId)
+      
+    } catch (error) {
+      
+    }
+  }
 
 export default {
     signup,
@@ -84,5 +93,6 @@ export default {
     addBooks,
     getBooks,
     updateBooks,
-    deleteBooks
+    deleteBooks,
+    getTransaction
 }

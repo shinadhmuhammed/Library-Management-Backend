@@ -66,7 +66,7 @@ const getBooks = async () => {
   }
 };
 
-const transactions = async (userId, bookId, dueDate) => {
+const transactions = async (userId, bookId, dueDate,adminId) => {
   try {
     const book = await Book.findById(bookId);
 
@@ -75,6 +75,7 @@ const transactions = async (userId, bookId, dueDate) => {
     }
 
     const newTransaction = new LibraryTransaction({
+      adminId,
       userId,
       bookId,
       dueDate,

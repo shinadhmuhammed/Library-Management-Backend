@@ -42,12 +42,12 @@ const getBooks=async(req,res)=>{
 
 const transactions = async (req, res) => {
     try {
-        const {bookId, returnDate } = req.body;
+        const {bookId,adminId, returnDate } = req.body;
+        console.log(adminId,'klklklk')
         const authHeader = req.headers.authorization;
         const token = authHeader && authHeader.split(' ')[1];
         const {id}=jwt.decode(token,process.env.SECRET_KEY)
-        // const id=req.user.id
-        const response = await userRepositary.transactions(id,bookId, returnDate);
+        const response = await userRepositary.transactions(id,bookId, returnDate,adminId);
         res.status(response.status).json(response);
       } catch (error) {
         console.error('Error in transactions controller:', error);
@@ -65,6 +65,7 @@ const transactions = async (req, res) => {
         res.status(500).json({ success: false, message: 'Server error' });
       }
     }
+
     const getUserBook = async (req, res) => {
       try {
         const bookId = req.query.bookId; 
@@ -75,9 +76,6 @@ const transactions = async (req, res) => {
         res.status(500).json({ message: 'Server error' });
       }
     };
-
-  
-
 
 
 export default {

@@ -15,10 +15,10 @@ export const authenticateToken = (req, res, next) => {
 
   if (token == null) return res.status(401).json({ success: false, message: 'No token provided' });
 
-  jwt.verify(token, process.env.SECRET_KEY, (err, user) => {
+  jwt.verify(token, process.env.SECRET_KEY, (err, admin) => {
       if (err) return res.status(403).json({ success: false, message: 'Invalid token' });
 
-      req.user = user; 
+      req.admin = admin; 
       next(); 
   });
 };

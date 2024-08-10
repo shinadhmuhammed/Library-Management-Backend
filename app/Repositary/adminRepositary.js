@@ -57,14 +57,16 @@ const adminLogin = async (username, password) => {
   }
 }
 
-const addBooks=async(data)=>{
+const addBooks=async(data,adminId)=>{
   try {
     const { name, author, currentAvailabilityStatus } = data;
 
     const newBook=new Book({
+      adminId,
       name,
       author,
-      currentAvailabilityStatus: currentAvailabilityStatus ?? true
+      currentAvailabilityStatus: currentAvailabilityStatus ?? true,
+      
     })
     const saveBook=await newBook.save()
     return saveBook
