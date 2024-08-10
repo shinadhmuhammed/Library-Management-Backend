@@ -3,6 +3,8 @@ import AdminUser from "../Models/adminModel.js";
 import bcrypt from 'bcrypt'
 import {generateToken} from "../utils/jwt.js";
 import Book from "../Models/bookModel.js";
+import LibraryTransaction from "../Models/libraryModel.js";
+import User from "../Models/userModel.js";
 
 const adminSignup = async (data) => {
   try {
@@ -107,11 +109,36 @@ const deleteBooks=async(id)=>{
   }
 }
 
+const getTransaction=async(adminId)=>{
+  try {
+    const transaction=await LibraryTransaction.find({adminId})
+    return transaction
+  } catch (error) {
+    console.error('Error deleting book in repository:', error);
+    throw error;
+  }
+}
+
+const details = async (adminId, bookId) => {
+  try {
+    const bookDetails = await Book.find({_id:bookId} ); 
+    const userDetails = await User.find({ _id: adminId}); 
+    return { bookDetails, userDetails }; 
+  } catch (error) {
+    console.error('Error fetching details in repository:', error);
+    throw error; 
+  }
+};
+
+
+
 export default {
   adminSignup,
   adminLogin,
   addBooks,
   getBooks,
   updateBooks,
-  deleteBooks
+  deleteBooks,
+  getTransaction,
+  details
 };

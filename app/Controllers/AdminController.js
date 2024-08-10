@@ -1,6 +1,6 @@
 import adminRepositary from '../Repositary/adminRepositary.js';
 import repositary from '../Repositary/adminRepositary.js'
-
+import {sendEmailNotification} from '../utils/nodeMailer.js'
 
 
 const signup=async(req,res)=>{
@@ -81,11 +81,41 @@ const login = async (req, res) => {
     try {
       const adminId = req.admin.adminId; 
       const transactions=await repositary.getTransaction(adminId)
-      
+      res.status(200).json(transactions)
     } catch (error) {
-      
+      console.error('Error fetching transaction:', error);
+      res.status(500).json({ message: 'Error fetching transactions', error: error.message });
     }
   }
+
+  const transactionDetails=async(req,res)=>{
+    try {
+      const { userId, bookId } = req.body;
+      const details=await repositary.details(userId,bookId)
+      res.status(200).json(details)
+    } catch (error) {
+      console.error('Error fetching transaction:', error);
+      res.status(500).json({ message: 'Error fetching transactions', error: error.message });
+    }
+  }
+
+  const sendReminder=async(req,res)=>{
+    try {
+      const { email, bookName } = req.body;
+      console.log(email,bookName)
+      const message = `This is a reminder to return the book "${bookName}". Please make sure to return it on time.`;
+      const subject = 'Book Return Reminder';
+  
+      await sendEmailNotification(email, message, subject);
+  
+      res.status(200).json({ success: true, message: 'Reminder sent successfully' });
+    } catch (error) {
+      console.error('Error sending email reminder:', error);
+      res.status(500).json({ success: false, message: 'Failed to send reminder' });
+    }
+  }
+
+
 
 export default {
     signup,
@@ -94,5 +124,7 @@ export default {
     getBooks,
     updateBooks,
     deleteBooks,
-    getTransaction
+    getTransaction,
+    transactionDetails,
+    sendReminder
 }

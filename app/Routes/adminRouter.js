@@ -10,6 +10,8 @@ AdminRouter.post('/books',authenticateToken,adminController.addBooks)
 AdminRouter.get('/getBooks',authenticateToken,adminController.getBooks)
 AdminRouter.put('/books/:id',authenticateToken,adminController.updateBooks)
 AdminRouter.delete('/deleteBooks/:id',authenticateToken,adminController.deleteBooks)
-AdminRouter.delete('/getTransaction',authenticateToken,adminController.getTransaction)
+AdminRouter.get('/getTransaction',authenticateToken,adminController.getTransaction)
+AdminRouter.post('/details',authenticateToken,adminController.transactionDetails)
+AdminRouter.post('/sendReminder',authenticateToken,adminController.sendReminder)
 
 export default AdminRouter
