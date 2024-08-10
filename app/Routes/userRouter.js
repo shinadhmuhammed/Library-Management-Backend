@@ -9,5 +9,6 @@ import {authenticateToken} from '../utils/userJwt.js'
  UserRoute.get('/getBooks',authenticateToken,userController.getBooks)
  UserRoute.post('/transactions',authenticateToken,userController.transactions)
  UserRoute.get('/gettransactions',authenticateToken,userController.getTransactions)
+ UserRoute.get('/getUserBook',authenticateToken,userController.getUserBook)
 
 export default UserRoute

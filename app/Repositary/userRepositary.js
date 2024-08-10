@@ -103,4 +103,16 @@ const getTransactions = async (userId) => {
   }
 };
 
-export default { signup, login, getBooks, transactions, getTransactions };
+const getUserBook=async(bookId)=>{
+  try {
+    const book = await Book.findById(bookId); 
+   return book
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+
+
+
+export default { signup, login, getBooks, transactions, getTransactions,getUserBook };

@@ -1,7 +1,7 @@
 import express from "express";
 import AdminUser from "../Models/adminModel.js";
 import bcrypt from 'bcrypt'
-import generateToken from "../utils/jwt.js";
+import {generateToken} from "../utils/jwt.js";
 import Book from "../Models/bookModel.js";
 
 const adminSignup = async (data) => {

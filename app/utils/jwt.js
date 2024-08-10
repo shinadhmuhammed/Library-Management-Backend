@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 
-const generateToken = (admin) => {
+export const generateToken = (admin) => {
   const payload = {
     adminId: admin._id,
     adminname: admin.username,
@@ -9,5 +9,19 @@ const generateToken = (admin) => {
   return token;
 };
 
+export const authenticateToken = (req, res, next) => {
+  const authHeader = req.headers.authorization;
+  const token = authHeader && authHeader.split(' ')[1]; 
 
-export default generateToken;
+  if (token == null) return res.status(401).json({ success: false, message: 'No token provided' });
+
+  jwt.verify(token, process.env.SECRET_KEY, (err, user) => {
+      if (err) return res.status(403).json({ success: false, message: 'Invalid token' });
+
+      req.user = user; 
+      next(); 
+  });
+};
+
+
+
